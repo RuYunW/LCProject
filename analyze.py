@@ -9,22 +9,25 @@ with open(filename, 'rb') as f:
 
 lines = content.split("\n")
 temp = []
+return_line = ""
+method_line = ""
+count = -1
+
 for i in lines:
     if ";" not in i and "if" not in i and "while" not in i and "}" not in i and "for" not in i and "static" not in i and "this" not in i and "{" in i and "." not in i and "switch" not in i and "do" not in i and "else" not in i:
-        temp.append(i)
+        method_line = str(i)
+        temp.append(method_line)
+        count += 1
+    elif "return" in i:
+        return_line = str(i)
+        temp[count] += return_line
 
 temp = list(filter(None, temp))
 method = []
 for i in temp:
-    if len(str(i))>=2:
+    # print(i)
+    if len(str(i)) >= 2:
         method.append(i)
-
-for i in range(len(method)):
-     method[i].replace(" ","")
-
-for i in method:
-    if "public" not in i and "class" not in i:
-        print(i)
 
 # 写之前，先检验文件是否存在，存在就删掉
 if os.path.exists("train_magic_method_class.txt"):
@@ -37,3 +40,5 @@ for var in method:
     file_write_obj.write('\n')
 file_write_obj.close()
 
+for i in temp:
+    print(i)
