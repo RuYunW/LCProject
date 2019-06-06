@@ -1,13 +1,24 @@
-a = [[1,2,3],[1,4,[5,5,7]],5]
-print(a)
-a[1][2].append([666])
-print(a)
+from numpy import array
+from numpy import argmax
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 
-b = a[0][0]
-c = "777"
-print(str(b)+c)
+# define example
+data = ['cold', 'cold', 'warm', 'cold', 'hot', 'hot', 'warm', 'cold', 'warm', 'hot']
+values = array(data)
+# print(values)
+# integer encode
+label_encoder = LabelEncoder()
+integer_encoded = label_encoder.fit_transform(values)
+# print(integer_encoded)
+# binary encode
+onehot_encoder = OneHotEncoder(sparse=False)
+integer_encoded = integer_encoded.reshape(len(integer_encoded), 1)
+onehot_encoded = onehot_encoder.fit_transform(integer_encoded)
 
-a = [1,2,3]
-b = [2,3]
-a = a+b
-print(a)
+# invert first example
+inverted = label_encoder.inverse_transform([argmax(onehot_encoded[0, :])])
+print(data)
+print(onehot_encoded)
+
