@@ -52,6 +52,7 @@ filename2 = "./data/content.txt"
 if os.path.exists(filename2):
     os.remove(filename2)
 
+
 # 以写的方式打开文件，如果文件不存在，就会自动创建
 file_write_obj = open(filename2, 'w')
 for var in range(len(one_hot)):
